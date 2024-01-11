@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:window_manager/src/utils/resource.dart';
 
 class WindowCaptionButtonIcon extends StatelessWidget {
   const WindowCaptionButtonIcon({
@@ -16,12 +17,30 @@ class WindowCaptionButtonIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      name,
-      package: package,
+    final image;
+    switch (name) {
+      case 'close':
+        image = R.close;
+        break;
+      case 'unmaximize':
+        image = R.unmaximize;
+        break;
+      case 'maximize':
+        image = R.maximize;
+        break;
+      case 'minimize':
+        image = R.minimize;
+        break;
+      default:
+        image = R.close;
+    }
+
+    return Image.memory(
+      image,
       width: 15,
       color: color,
       filterQuality: FilterQuality.high,
+      gaplessPlayback: true,
     );
   }
 }
@@ -41,7 +60,7 @@ class WindowCaptionButton extends StatefulWidget {
     this.brightness,
     this.icon,
     this.onPressed,
-  })  : iconName = 'images/ic_chrome_close.png',
+  })  : iconName = 'close',
         _lightButtonBgColorScheme = _ButtonBgColorScheme(
           normal: Colors.transparent,
           hovered: const Color(0xffC42B1C),
@@ -70,21 +89,21 @@ class WindowCaptionButton extends StatefulWidget {
     this.brightness,
     this.icon,
     this.onPressed,
-  }) : iconName = 'images/ic_chrome_unmaximize.png';
+  }) : iconName = 'unmaximize';
 
   WindowCaptionButton.maximize({
     super.key,
     this.brightness,
     this.icon,
     this.onPressed,
-  }) : iconName = 'images/ic_chrome_maximize.png';
+  }) : iconName = 'maximize';
 
   WindowCaptionButton.minimize({
     super.key,
     this.brightness,
     this.icon,
     this.onPressed,
-  }) : iconName = 'images/ic_chrome_minimize.png';
+  }) : iconName = 'minimize';
 
   final Brightness? brightness;
   final Widget? icon;
